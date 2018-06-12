@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jsonp</title>
+    <style>
+        div {
+            text-align: center;
+            margin: 100px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <span id="count">0</span>
+        <button id="add">点击</button>
+    </div>
+    <script>
+        add.addEventListener('click', () => {
+            let script = document.createElement('script')
+            let sName = 'callback' + parseInt(Math.random() * 10000000, 10)
+            script.src = 'http://127.0.0.1:8080/add?callback=' + sName
+            window[sName] = (res) => {
+                if (res.success == true) {
+                    count.innerText = res.count
+                }
+
+            }
+            document.body.appendChild(script)
+            script.onload = (e) => {
+                this.remove()
+                delete window[functionName]
+            }
+        })
+    </script>
+</body>
+
+</html>
