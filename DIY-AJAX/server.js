@@ -4,16 +4,15 @@ var url = require('url')
 var port = 8080
 var number = fs.readFileSync('./db', 'utf8')
 
-var server = http.createServer(function (request, response) {
+var server = http.createServer(function(request, response) {
     var parsedUrl = url.parse(request.url, true)
     var path = request.url
     var query = ''
-    if (path.indexOf('?') >= 0) {
-        query = path.substring(path.indexOf('?'))
-    }
+    if (path.indexOf('?') >= 0) { query = path.substring(path.indexOf('?')) }
     var pathNoQuery = parsedUrl.pathname
     var queryObject = parsedUrl.query
     var method = request.method
+    response.setHeader('Access-Control-Allow-Origin', '*')
 
     console.log('HTTP 路径为\n' + path)
     if (path === '/style') {
@@ -22,7 +21,7 @@ var server = http.createServer(function (request, response) {
         response.end()
     } else if (path === '/script') {
         response.setHeader('Content-Type', 'text/javascript; charset=utf-8')
-        // response.write('alert("这是JS执行的")')
+            // response.write('alert("这是JS执行的")')
         response.end()
     } else if (path === '/') {
         response.setHeader('Content-Type', 'text/html; charset=utf-8')
@@ -31,9 +30,8 @@ var server = http.createServer(function (request, response) {
                 throw err
             }
             response.end(data)
-        })
 
-        response.end()
+        })
     } else if (pathNoQuery === '/add') {
         response.setHeader('Content-Type', 'application/javascript')
         number = number - 0 + 1

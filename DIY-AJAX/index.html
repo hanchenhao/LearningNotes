@@ -15,10 +15,9 @@
 </head>
 
 <body>
-    <div>
-        <span id="count">0</span>
-        <button id="add">点击</button>
-    </div>
+
+    <h1>diy-ajax</h1>
+
     <script>
         window.jQuery = {}
         window.jQuery.ajax = ({
@@ -29,6 +28,7 @@
             return new Promise((resolve, reject) => {
                 let xhr = new XMLHttpRequest()
                 xhr.open(method, url)
+                xhr.setRequestHeader('Accept', 'application/json');
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState === 4) {
                         if (xhr.status >= 200 && xhr.status <= 300) {
@@ -38,8 +38,24 @@
                         }
                     }
                 }
+                xhr.send(body)
             })
         }
+
+
+        window.jQuery.ajax({
+            url: '/',
+            method: 'get',
+            body: {
+                "a": "b"
+            }
+        }).then(
+            (res) => {
+                console.log(res)
+            },
+            (err) => {
+                console.log(err)
+            })
     </script>
 </body>
 
