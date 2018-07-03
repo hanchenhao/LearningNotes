@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ajax</title>
+    <style>
+        div {
+            text-align: center;
+            margin: 100px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <span id="count">0</span>
+        <button id="add">点击</button>
+    </div>
+    <script>
+        window.jQuery = {}
+        window.jQuery.ajax = ({
+            url,
+            method,
+            body
+        }) => {
+            return new Promise((resolve, reject) => {
+                let xhr = new XMLHttpRequest()
+                xhr.open(method, url)
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status >= 200 && xhr.status <= 300) {
+                            resolve(xhr.responseText)
+                        } else if (xhr.status >= 400) {
+                            reject(xhr)
+                        }
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
